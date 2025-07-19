@@ -1,6 +1,6 @@
-package org.ecos.logic.selenide_demo.utils.hooks;
+package org.ecos.logic.selenide_demo.hooks;
 
-import org.ecos.logic.selenide_demo.utils.init.WebDriverFactory;
+import org.ecos.logic.selenide_demo.init.WebDriverFactory;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.slf4j.Logger;

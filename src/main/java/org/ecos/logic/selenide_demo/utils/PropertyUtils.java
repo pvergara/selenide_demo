@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+@SuppressWarnings("unused")
 public class PropertyUtils {
     String result = "";
     InputStream inputStream;

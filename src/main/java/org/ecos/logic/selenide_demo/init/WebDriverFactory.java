@@ -1,7 +1,7 @@
-package org.ecos.logic.selenide_demo.utils.init;
+package org.ecos.logic.selenide_demo.init;
 
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.WebDriverRunner;
+import com.codeborne.selenide.Selenide;
 import org.ecos.logic.selenide_demo.utils.PropertyUtils;
 
 import static com.codeborne.selenide.Browsers.*;
@@ -58,7 +58,7 @@ public class WebDriverFactory {
     }
 
     private static void shutdownWebDriver() {
-        WebDriverRunner.closeWebDriver();
+        Selenide.closeWebDriver() ;
     }
 
 }

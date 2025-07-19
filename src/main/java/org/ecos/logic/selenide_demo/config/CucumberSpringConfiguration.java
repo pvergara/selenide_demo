@@ -1,4 +1,4 @@
-package org.ecos.logic.selenide_demo.utils.config;
+package org.ecos.logic.selenide_demo.config;
 
 import org.springframework.boot.test.context.SpringBootTest;
 
