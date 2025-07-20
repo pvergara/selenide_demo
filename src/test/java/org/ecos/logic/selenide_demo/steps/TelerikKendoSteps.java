@@ -4,6 +4,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.ecos.logic.selenide_demo.action.Action;
+import org.ecos.logic.selenide_demo.action.EqualsMatchAction;
 import org.ecos.logic.selenide_demo.pages.TelerikKendoPage;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -29,58 +30,35 @@ public class TelerikKendoSteps {
 
     public TelerikKendoSteps() {
         this.filteringActions = new ArrayList<>();
-        this.filteringActions.add(new Action() {
-            @Override
-            public boolean match(String filterName) {
-                return filterName.equals(FILTER_NAME_PRODUCT_NAME);
-            }
-
+        this.filteringActions.add(new EqualsMatchAction(FILTER_NAME_PRODUCT_NAME) {
             @Override
             public void execute(String filterValue) {
                 TelerikKendoSteps.this.page.typeTheFilterValueOnNameFilteringField(filterValue);
             }
         });
 
-        this.filteringActions.add(new Action() {
-            @Override
-            public boolean match(String filterName) {
-                return filterName.equals(FILTER_NAME_PRODUCT_CATEGORY);
-            }
-
+        this.filteringActions.add(new EqualsMatchAction(FILTER_NAME_PRODUCT_CATEGORY) {
             @Override
             public void execute(String filterValue) {
                 TelerikKendoSteps.this.page.typeTheFilterValueOnCategoryFilteringField(filterValue);
             }
         });
 
-        this.filteringActions.add(new Action() {
-            @Override
-            public boolean match(String filterName) {
-                return filterName.equals(FILTER_NAME_DISCONTINUED);
-            }
+        this.filteringActions.add(new EqualsMatchAction(FILTER_NAME_DISCONTINUED) {
             @Override
             public void execute(String filterValue) {
                 TelerikKendoSteps.this.page.typeTheFilterValueOnIsDiscontinuedField(filterValue);
             }
         });
 
-        this.filteringActions.add(new Action() {
-            @Override
-            public boolean match(String filterName) {
-                return filterName.equals(FILTER_NAME_PRICE);
-            }
+        this.filteringActions.add(new EqualsMatchAction(FILTER_NAME_PRICE) {
             @Override
             public void execute(String filterValue) {
                 TelerikKendoSteps.this.page.typeTheFilterValueOnPriceField(filterValue);
             }
         });
 
-
-        this.filteringActions.add(new Action() {
-            @Override
-            public boolean match(String filterName) {
-                return filterName.equals(FILTER_NAME_IN_STOCK);
-            }
+        this.filteringActions.add(new EqualsMatchAction(FILTER_NAME_IN_STOCK) {
             @Override
             public void execute(String filterValue) {
                 TelerikKendoSteps.this.page.typeTheFilterValueOnInStockField(filterValue);
