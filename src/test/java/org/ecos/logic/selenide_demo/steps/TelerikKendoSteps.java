@@ -1,6 +1,5 @@
 package org.ecos.logic.selenide_demo.steps;
 
-import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -12,6 +11,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 public class TelerikKendoSteps {
 
+    private static final String FILTER_NAME_PRODUCT_NAME = "Name";
+    private static final String FILTER_NAME_PRODUCT_CATEGORY = "Category";
     @Autowired
     private TelerikKendoPage page;
 
@@ -31,14 +32,19 @@ public class TelerikKendoSteps {
 
     }
 
-    @And("The number of rows are the default ones")
+    @Given("The number of rows are the default ones")
     public void theNumberOfRowsAreTheDefaultOnes() {
         this.setNumberOfRows(this.page.getTheNumberOfRows());
     }
 
-    @When("I type {string} on the name filter")
-    public void iTypeOnTheNameFilter(String filterValue) {
-        this.page.typeTheFilterValueOnNameFilteringField(filterValue);
+    @When("I type {string} on {string} filter")
+    public void iTypeOnTheNameFilter(String filterValue,String filterName) {
+        if(filterName.equals(FILTER_NAME_PRODUCT_NAME))
+            this.page.typeTheFilterValueOnNameFilteringField(filterValue);
+
+        if(filterName.equals(FILTER_NAME_PRODUCT_CATEGORY))
+            this.page.typeTheFilterValueOnCategoryFilteringField(filterValue);
+
     }
 
     @Then("The number of rows decrease")

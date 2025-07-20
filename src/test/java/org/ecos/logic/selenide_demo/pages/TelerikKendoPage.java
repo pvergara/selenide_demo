@@ -10,6 +10,7 @@ import static com.codeborne.selenide.Selenide.*;
 public class TelerikKendoPage {
     private final ElementsCollection tableRows= $$("tbody tr");
     private final SelenideElement nameFilteringField = $("input[aria-label=\"ProductName Filter\"]");
+    private final SelenideElement categoryFilteringField = $("input[aria-label=\"Category.CategoryName Filter\"]");
 
     public void openTelerikPage(){
         open("https://demos.telerik.com/kendo-react-ui/grid/get-started-upd/func");
@@ -21,5 +22,9 @@ public class TelerikKendoPage {
 
     public void typeTheFilterValueOnNameFilteringField(String filterValue) {
         this.nameFilteringField.type(filterValue);
+    }
+
+    public void typeTheFilterValueOnCategoryFilteringField(String filterValue) {
+        this.categoryFilteringField.type(filterValue);
     }
 }
