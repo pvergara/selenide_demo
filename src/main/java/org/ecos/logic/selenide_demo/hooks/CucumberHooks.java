@@ -17,7 +17,6 @@ import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 @SuppressWarnings("unused")
 public class CucumberHooks {
 
-    @SuppressWarnings("unused")
     private static final Logger sLog = LoggerFactory.getLogger(CucumberHooks.class);
 
 

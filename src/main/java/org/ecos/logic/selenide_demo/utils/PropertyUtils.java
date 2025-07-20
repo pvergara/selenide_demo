@@ -1,14 +1,19 @@
 package org.ecos.logic.selenide_demo.utils;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Objects;
 import java.util.Properties;
 
 @SuppressWarnings("unused")
 public class PropertyUtils {
     String result = "";
     InputStream inputStream;
+    private static final Logger sLog = LoggerFactory.getLogger(PropertyUtils.class);
 
     public static String getPropString(String propTerm) {
         return instance().getEnvPropertyValue(propTerm);
@@ -68,10 +73,10 @@ public class PropertyUtils {
         }
         finally {
             try {
-                inputStream.close();
+                Objects.requireNonNull(inputStream).close();
             }
-            catch (IOException e) {
-                e.printStackTrace();
+            catch (IOException|NullPointerException e) {
+                sLog.error("Exception: {}", String.valueOf(e));
             }
         }
         return result;
