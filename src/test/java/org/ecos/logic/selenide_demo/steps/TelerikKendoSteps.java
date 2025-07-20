@@ -13,6 +13,7 @@ public class TelerikKendoSteps {
 
     private static final String FILTER_NAME_PRODUCT_NAME = "Name";
     private static final String FILTER_NAME_PRODUCT_CATEGORY = "Category";
+    private static final String FILTER_NAME_DISCONTINUED = "Discontinued";
     @Autowired
     private TelerikKendoPage page;
 
@@ -44,6 +45,9 @@ public class TelerikKendoSteps {
 
         if(filterName.equals(FILTER_NAME_PRODUCT_CATEGORY))
             this.page.typeTheFilterValueOnCategoryFilteringField(filterValue);
+
+        if(filterName.equals(FILTER_NAME_DISCONTINUED))
+            this.page.typeTheFilterValueOnIsDiscontinuedField(filterValue);
 
     }
 
