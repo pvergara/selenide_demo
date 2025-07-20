@@ -18,7 +18,7 @@ Feature: Filter, sorting and paginating a grid
     When I type "false" on "Discontinued" filter
     Then The number of rows decrease
 
-  Scenario: User can filter by product categories
+  Scenario: User can filter by product price
     Given Open browser with Telerik Kendo Grid example
     And The number of rows are the default ones
     When I type "18" on "Price" filter
