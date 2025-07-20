@@ -23,3 +23,9 @@ Feature: Filter, sorting and paginating a grid
     And The number of rows are the default ones
     When I type "18" on "Price" filter
     Then The number of rows decrease
+
+  Scenario: User can filter by product in stock quantity
+    Given Open browser with Telerik Kendo Grid example
+    And The number of rows are the default ones
+    When I type "0" on "In Stock" filter
+    Then The number of rows decrease

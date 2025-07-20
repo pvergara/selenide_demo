@@ -15,6 +15,7 @@ public class TelerikKendoSteps {
     private static final String FILTER_NAME_PRODUCT_CATEGORY = "Category";
     private static final String FILTER_NAME_DISCONTINUED = "Discontinued";
     private static final String FILTER_NAME_PRICE = "Price";
+    private static final String FILTER_NAME_IN_STOCK = "In Stock";
 
     @Autowired
     private TelerikKendoPage page;
@@ -53,6 +54,9 @@ public class TelerikKendoSteps {
 
         if(filterName.equals(FILTER_NAME_PRICE))
             this.page.typeTheFilterValueOnPriceField(filterValue);
+
+        if(filterName.equals(FILTER_NAME_IN_STOCK))
+            this.page.typeTheFilterValueOnInStockField(filterValue);
     }
 
     @Then("The number of rows decrease")

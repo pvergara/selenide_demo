@@ -16,6 +16,7 @@ public class TelerikKendoPage {
     private final SelenideElement categoryFilteringField = $("input[aria-label=\"Category.CategoryName Filter\"]");
     private final SelenideElement isDiscontinuedFilterField = $("input[aria-label='Discontinued Filter']");
     private final SelenideElement priceFilterField = $("input[aria-label='UnitPrice Filter']");
+    private final SelenideElement inStockFilterField = $("input[aria-label='UnitsInStock Filter']");
 
     public void openTelerikPage(){
         open("https://demos.telerik.com/kendo-react-ui/grid/get-started-upd/func");
@@ -45,5 +46,9 @@ public class TelerikKendoPage {
 
     public void typeTheFilterValueOnPriceField(String filterValue) {
         this.priceFilterField.type(filterValue);
+    }
+
+    public void typeTheFilterValueOnInStockField(String filterValue) {
+        this.inStockFilterField.type(filterValue);
     }
 }
