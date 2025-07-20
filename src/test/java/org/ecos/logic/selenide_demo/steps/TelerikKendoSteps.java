@@ -3,8 +3,12 @@ package org.ecos.logic.selenide_demo.steps;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.ecos.logic.selenide_demo.action.Action;
 import org.ecos.logic.selenide_demo.pages.TelerikKendoPage;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -21,6 +25,68 @@ public class TelerikKendoSteps {
     private TelerikKendoPage page;
 
     private int numberOfRows;
+    private final List<Action> filteringActions;
+
+    public TelerikKendoSteps() {
+        this.filteringActions = new ArrayList<>();
+        this.filteringActions.add(new Action() {
+            @Override
+            public boolean match(String filterName) {
+                return filterName.equals(FILTER_NAME_PRODUCT_NAME);
+            }
+
+            @Override
+            public void execute(String filterValue) {
+                TelerikKendoSteps.this.page.typeTheFilterValueOnNameFilteringField(filterValue);
+            }
+        });
+
+        this.filteringActions.add(new Action() {
+            @Override
+            public boolean match(String filterName) {
+                return filterName.equals(FILTER_NAME_PRODUCT_CATEGORY);
+            }
+
+            @Override
+            public void execute(String filterValue) {
+                TelerikKendoSteps.this.page.typeTheFilterValueOnCategoryFilteringField(filterValue);
+            }
+        });
+
+        this.filteringActions.add(new Action() {
+            @Override
+            public boolean match(String filterName) {
+                return filterName.equals(FILTER_NAME_DISCONTINUED);
+            }
+            @Override
+            public void execute(String filterValue) {
+                TelerikKendoSteps.this.page.typeTheFilterValueOnIsDiscontinuedField(filterValue);
+            }
+        });
+
+        this.filteringActions.add(new Action() {
+            @Override
+            public boolean match(String filterName) {
+                return filterName.equals(FILTER_NAME_PRICE);
+            }
+            @Override
+            public void execute(String filterValue) {
+                TelerikKendoSteps.this.page.typeTheFilterValueOnPriceField(filterValue);
+            }
+        });
+
+
+        this.filteringActions.add(new Action() {
+            @Override
+            public boolean match(String filterName) {
+                return filterName.equals(FILTER_NAME_IN_STOCK);
+            }
+            @Override
+            public void execute(String filterValue) {
+                TelerikKendoSteps.this.page.typeTheFilterValueOnInStockField(filterValue);
+            }
+        });
+    }
 
     public void setNumberOfRows(int numberOfRows) {
         this.numberOfRows = numberOfRows;
@@ -43,20 +109,10 @@ public class TelerikKendoSteps {
 
     @When("I type {string} on {string} filter")
     public void iTypeOnTheNameFilter(String filterValue,String filterName) {
-        if(filterName.equals(FILTER_NAME_PRODUCT_NAME))
-            this.page.typeTheFilterValueOnNameFilteringField(filterValue);
-
-        if(filterName.equals(FILTER_NAME_PRODUCT_CATEGORY))
-            this.page.typeTheFilterValueOnCategoryFilteringField(filterValue);
-
-        if(filterName.equals(FILTER_NAME_DISCONTINUED))
-            this.page.typeTheFilterValueOnIsDiscontinuedField(filterValue);
-
-        if(filterName.equals(FILTER_NAME_PRICE))
-            this.page.typeTheFilterValueOnPriceField(filterValue);
-
-        if(filterName.equals(FILTER_NAME_IN_STOCK))
-            this.page.typeTheFilterValueOnInStockField(filterValue);
+        for(Action filteringAction : filteringActions){
+            if(filteringAction.match(filterName))
+                filteringAction.execute(filterValue);
+        }
     }
 
     @Then("The number of rows decrease")
