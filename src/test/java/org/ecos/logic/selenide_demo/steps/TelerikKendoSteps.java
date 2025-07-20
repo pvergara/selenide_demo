@@ -30,40 +30,11 @@ public class TelerikKendoSteps {
 
     public TelerikKendoSteps() {
         this.filteringActions = new ArrayList<>();
-        this.filteringActions.add(new EqualsMatchAction(FILTER_NAME_PRODUCT_NAME) {
-            @Override
-            public void execute(String filterValue) {
-                TelerikKendoSteps.this.page.typeTheFilterValueOnNameFilteringField(filterValue);
-            }
-        });
-
-        this.filteringActions.add(new EqualsMatchAction(FILTER_NAME_PRODUCT_CATEGORY) {
-            @Override
-            public void execute(String filterValue) {
-                TelerikKendoSteps.this.page.typeTheFilterValueOnCategoryFilteringField(filterValue);
-            }
-        });
-
-        this.filteringActions.add(new EqualsMatchAction(FILTER_NAME_DISCONTINUED) {
-            @Override
-            public void execute(String filterValue) {
-                TelerikKendoSteps.this.page.typeTheFilterValueOnIsDiscontinuedField(filterValue);
-            }
-        });
-
-        this.filteringActions.add(new EqualsMatchAction(FILTER_NAME_PRICE) {
-            @Override
-            public void execute(String filterValue) {
-                TelerikKendoSteps.this.page.typeTheFilterValueOnPriceField(filterValue);
-            }
-        });
-
-        this.filteringActions.add(new EqualsMatchAction(FILTER_NAME_IN_STOCK) {
-            @Override
-            public void execute(String filterValue) {
-                TelerikKendoSteps.this.page.typeTheFilterValueOnInStockField(filterValue);
-            }
-        });
+        this.filteringActions.add(new TelerikKendoFilteringAction(FILTER_NAME_PRODUCT_NAME, "ProductName Filter"));
+        this.filteringActions.add(new TelerikKendoFilteringAction(FILTER_NAME_PRODUCT_CATEGORY, "Category.CategoryName Filter"));
+        this.filteringActions.add(new TelerikKendoFilteringAction(FILTER_NAME_DISCONTINUED, "Discontinued Filter"));
+        this.filteringActions.add(new TelerikKendoFilteringAction(FILTER_NAME_PRICE, "UnitPrice Filter"));
+        this.filteringActions.add(new TelerikKendoFilteringAction(FILTER_NAME_IN_STOCK, "UnitsInStock Filter"));
     }
 
     public void setNumberOfRows(int numberOfRows) {
@@ -86,9 +57,9 @@ public class TelerikKendoSteps {
     }
 
     @When("I type {string} on {string} filter")
-    public void iTypeOnTheNameFilter(String filterValue,String filterName) {
-        for(Action filteringAction : filteringActions){
-            if(filteringAction.match(filterName))
+    public void iTypeOnTheNameFilter(String filterValue, String filterName) {
+        for (Action filteringAction : filteringActions) {
+            if (filteringAction.match(filterName))
                 filteringAction.execute(filterValue);
         }
     }
@@ -96,5 +67,19 @@ public class TelerikKendoSteps {
     @Then("The number of rows decrease")
     public void theNumberOfRowsDecrease() {
         assertThat(this.page.getTheNumberOfRows()).isLessThan(this.getNumberOfRows());
+    }
+
+    private class TelerikKendoFilteringAction extends EqualsMatchAction {
+        private final String innerFilterValue;
+
+        public TelerikKendoFilteringAction(String filterNameProductName, String filterName) {
+            super(filterNameProductName);
+            this.innerFilterValue = filterName;
+        }
+
+        @Override
+        public void execute(String filterValue) {
+            TelerikKendoSteps.this.page.typeTheFilterValueOnAFieldCalled(this.innerFilterValue, filterValue);
+        }
     }
 }
