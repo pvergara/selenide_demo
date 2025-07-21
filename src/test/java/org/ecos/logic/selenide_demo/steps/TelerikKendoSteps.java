@@ -15,7 +15,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 public class TelerikKendoSteps {
-
     private static final String FILTER_NAME_PRODUCT_NAME = "Name";
     private static final String FILTER_NAME_PRODUCT_CATEGORY = "Category";
     private static final String FILTER_NAME_DISCONTINUED = "Discontinued";
@@ -67,6 +66,16 @@ public class TelerikKendoSteps {
     @Then("The number of rows decrease")
     public void theNumberOfRowsDecrease() {
         assertThat(this.page.getTheNumberOfRows()).isLessThan(this.getNumberOfRows());
+    }
+
+    @Then("The {string} rows only has text that contains {string}")
+    public void theRowsOnlyHasTextThatContains(String columnName, String filterValue) {
+        if(columnName.equals(FILTER_NAME_PRODUCT_NAME)) {
+            List<String> result = this.page.getAllValuesOfProductName();
+            assertThat(
+                result.stream().allMatch(value -> value.toLowerCase().contains(filterValue.toLowerCase()))
+            ).isTrue();
+        }
     }
 
     private class TelerikKendoFilteringAction extends EqualsMatchAction {

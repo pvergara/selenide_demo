@@ -4,6 +4,7 @@ Feature: Filter, sorting and paginating a grid
     Given Open browser with Telerik Kendo Grid example
     And The number of rows are the default ones
     When I type "Che" on "Name" filter
+    Then The "Name" rows only has text that contains "Che"
     Then The number of rows decrease
 
   Scenario: User can filter by product categories
