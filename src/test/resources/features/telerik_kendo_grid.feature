@@ -35,4 +35,5 @@ Feature: Filter, sorting and paginating a grid
     Given Open browser with Telerik Kendo Grid example
     And The number of rows are the default ones
     When I type "0" on "In Stock" filter
-    Then The number of rows decrease
+    Then The "In Stock" rows only has text that contains "0"
+    And The number of rows decrease
