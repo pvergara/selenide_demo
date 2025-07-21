@@ -42,4 +42,10 @@ public class TelerikKendoPage {
             tbodyRows.stream().
             map(e->e.$("td[aria-colindex='2']").getText()).toList();
     }
+
+    public List<String> getAllValuesOfIsDiscontinuedField() {
+        return this.
+                tbodyRows.stream().
+                map(e->e.$("td[aria-colindex='6']").getText()).toList();
+    }
 }

@@ -76,6 +76,12 @@ public class TelerikKendoSteps {
                 result.stream().allMatch(value -> value.toLowerCase().contains(filterValue.toLowerCase()))
             ).isTrue();
         }
+        if(columnName.equals(FILTER_NAME_DISCONTINUED)) {
+            List<String> result = this.page.getAllValuesOfIsDiscontinuedField();
+            assertThat(
+                    result.stream().allMatch(value -> value.toLowerCase().contains(filterValue.toLowerCase()))
+            ).isTrue();
+        }
     }
 
     private class TelerikKendoFilteringAction extends EqualsMatchAction {
