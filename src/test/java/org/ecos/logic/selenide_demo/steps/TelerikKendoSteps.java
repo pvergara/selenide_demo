@@ -70,18 +70,26 @@ public class TelerikKendoSteps {
 
     @Then("The {string} rows only has text that contains {string}")
     public void theRowsOnlyHasTextThatContains(String columnName, String filterValue) {
-        if(columnName.equals(FILTER_NAME_PRODUCT_NAME)) {
-            List<String> result = this.page.getAllValuesOfProductName();
-            assertThat(
-                result.stream().allMatch(value -> value.toLowerCase().contains(filterValue.toLowerCase()))
-            ).isTrue();
-        } else if(columnName.equals(FILTER_NAME_DISCONTINUED)) {
-            List<String> result = this.page.getAllValuesOfIsDiscontinuedField();
-            assertThat(
-                    result.stream().allMatch(value -> value.toLowerCase().contains(filterValue.toLowerCase()))
-            ).isTrue();
-        } else {
-            throw new IllegalArgumentException("The column name '%s' does not exist".formatted(columnName));
+        switch (columnName) {
+            case FILTER_NAME_PRODUCT_NAME -> {
+                List<String> result = this.page.getAllValuesOfProductName();
+                assertThat(
+                        result.stream().allMatch(value -> value.toLowerCase().contains(filterValue.toLowerCase()))
+                ).isTrue();
+            }
+            case FILTER_NAME_DISCONTINUED -> {
+                List<String> result = this.page.getAllValuesOfIsDiscontinuedField();
+                assertThat(
+                        result.stream().allMatch(value -> value.toLowerCase().contains(filterValue.toLowerCase()))
+                ).isTrue();
+            }
+            case FILTER_NAME_IN_STOCK -> {
+                List<String> result = this.page.getAllValuesOfInStockField();
+                assertThat(
+                        result.stream().allMatch(value -> value.toLowerCase().contains(filterValue.toLowerCase()))
+                ).isTrue();
+            }
+            default -> throw new IllegalArgumentException("The column name '%s' does not exist".formatted(columnName));
         }
     }
 

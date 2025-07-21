@@ -48,4 +48,10 @@ public class TelerikKendoPage {
                 tbodyRows.stream().
                 map(e->e.$("td[aria-colindex='6']").getText()).toList();
     }
+
+    public List<String> getAllValuesOfInStockField() {
+        return this.
+                tbodyRows.stream().
+                map(e->e.$("td[aria-colindex='5']").getText()).toList();
+    }
 }
