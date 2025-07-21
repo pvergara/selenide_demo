@@ -37,3 +37,12 @@ Feature: Filter, sorting and paginating a grid
     When I type "0" on "In Stock" filter
     Then The "In Stock" rows only has text that contains "0"
     And The number of rows decrease
+
+
+    #Add a "Numeric filtering"
+    #   * filter==0 is not the same than filter field that contains "0"
+    #   * filter>=x
+    #   * filter<x
+
+    #Add filtering combinations
+    # (ie category and price filter AS NUMBER)
