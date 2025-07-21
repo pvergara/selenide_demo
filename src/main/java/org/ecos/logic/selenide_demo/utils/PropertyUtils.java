@@ -13,7 +13,7 @@ import java.util.Properties;
 public class PropertyUtils {
     String result = "";
     InputStream inputStream;
-    private static final Logger sLog = LoggerFactory.getLogger(PropertyUtils.class);
+    private static final Logger log = LoggerFactory.getLogger(PropertyUtils.class);
 
     public static String getPropString(String propTerm) {
         return instance().getEnvPropertyValue(propTerm);
@@ -76,7 +76,7 @@ public class PropertyUtils {
                 Objects.requireNonNull(inputStream).close();
             }
             catch (IOException|NullPointerException e) {
-                sLog.error("Exception: {}", String.valueOf(e));
+                log.error("Exception: {}", String.valueOf(e));
             }
         }
         return result;
