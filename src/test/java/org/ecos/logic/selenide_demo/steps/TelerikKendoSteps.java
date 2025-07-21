@@ -75,12 +75,13 @@ public class TelerikKendoSteps {
             assertThat(
                 result.stream().allMatch(value -> value.toLowerCase().contains(filterValue.toLowerCase()))
             ).isTrue();
-        }
-        if(columnName.equals(FILTER_NAME_DISCONTINUED)) {
+        } else if(columnName.equals(FILTER_NAME_DISCONTINUED)) {
             List<String> result = this.page.getAllValuesOfIsDiscontinuedField();
             assertThat(
                     result.stream().allMatch(value -> value.toLowerCase().contains(filterValue.toLowerCase()))
             ).isTrue();
+        } else {
+            throw new IllegalArgumentException("The column name '%s' does not exist".formatted(columnName));
         }
     }
 
