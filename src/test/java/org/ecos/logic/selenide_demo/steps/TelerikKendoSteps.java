@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.ecos.logic.selenide_demo.utils.Constants.*;
 
 @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 public class TelerikKendoSteps {
@@ -29,11 +30,11 @@ public class TelerikKendoSteps {
 
     public TelerikKendoSteps() {
         this.filteringActions = new ArrayList<>();
-        this.filteringActions.add(new TelerikKendoFilteringAction(FILTER_NAME_PRODUCT_NAME, "ProductName Filter"));
-        this.filteringActions.add(new TelerikKendoFilteringAction(FILTER_NAME_PRODUCT_CATEGORY, "Category.CategoryName Filter"));
-        this.filteringActions.add(new TelerikKendoFilteringAction(FILTER_NAME_DISCONTINUED, "Discontinued Filter"));
-        this.filteringActions.add(new TelerikKendoFilteringAction(FILTER_NAME_PRICE, "UnitPrice Filter"));
-        this.filteringActions.add(new TelerikKendoFilteringAction(FILTER_NAME_IN_STOCK, "UnitsInStock Filter"));
+        this.filteringActions.add(new TelerikKendoFilteringAction(FILTER_NAME_PRODUCT_NAME, KENDO_TABLE_PRODUCT_NAME_FILTER));
+        this.filteringActions.add(new TelerikKendoFilteringAction(FILTER_NAME_PRODUCT_CATEGORY, KENDO_TABLE_CATEGORY_FILTER));
+        this.filteringActions.add(new TelerikKendoFilteringAction(FILTER_NAME_DISCONTINUED, KENDO_TABLE_DISCONTINUED_FILTER));
+        this.filteringActions.add(new TelerikKendoFilteringAction(FILTER_NAME_PRICE, KENDO_TABLE_UNIT_PRICE_FILTER));
+        this.filteringActions.add(new TelerikKendoFilteringAction(FILTER_NAME_IN_STOCK, KENDO_TABLE_UNITS_IN_STOCK_FILTER));
     }
 
     public void setNumberOfRows(int numberOfRows) {
