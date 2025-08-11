@@ -45,13 +45,25 @@ public class TelerikKendoPage {
 
     public List<String> getAllValuesOfIsDiscontinuedField() {
         return this.
-                tbodyRows.stream().
-                map(e->e.$("td[aria-colindex='6']").getText()).toList();
+            tbodyRows.stream().
+            map(e->e.$("td[aria-colindex='6']").getText()).toList();
     }
 
     public List<String> getAllValuesOfInStockField() {
         return this.
-                tbodyRows.stream().
-                map(e->e.$("td[aria-colindex='5']").getText()).toList();
+            tbodyRows.stream().
+            map(e->e.$("td[aria-colindex='5']").getText()).toList();
+    }
+
+    public List<String> getAllValuesProductCategory() {
+        return this.
+            tbodyRows.stream().
+            map(e->e.$("td[aria-colindex='3']").getText()).toList();
+    }
+
+    public List<String> getAllValuesOfPriceField() {
+        return this.
+            tbodyRows.stream().
+            map(e->e.$("td[aria-colindex='4']").getText()).toList();
     }
 }

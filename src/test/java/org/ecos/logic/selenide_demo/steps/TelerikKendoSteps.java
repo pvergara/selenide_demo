@@ -50,6 +50,15 @@ public class TelerikKendoSteps {
                 ).isTrue();
             }
         });
+        this.filteringValidationActions.add(new EqualsMatchAction(FILTER_NAME_PRODUCT_CATEGORY) {
+            @Override
+            public void execute(String filterValue) {
+                List<String> result = TelerikKendoSteps.this.page.getAllValuesProductCategory();
+                assertThat(
+                        result.stream().allMatch(value -> value.toLowerCase().contains(filterValue.toLowerCase()))
+                ).isTrue();
+            }
+        });
         this.filteringValidationActions.add(new EqualsMatchAction(FILTER_NAME_DISCONTINUED) {
             @Override
             public void execute(String filterValue) {
@@ -59,6 +68,16 @@ public class TelerikKendoSteps {
                 ).isTrue();
             }
         });
+        this.filteringValidationActions.add(new EqualsMatchAction(FILTER_NAME_PRICE) {
+            @Override
+            public void execute(String filterValue) {
+                List<String> result = TelerikKendoSteps.this.page.getAllValuesOfPriceField();
+                assertThat(
+                        result.stream().allMatch(value -> value.toLowerCase().contains(filterValue.toLowerCase()))
+                ).isTrue();
+            }
+        });
+
         this.filteringValidationActions.add(new EqualsMatchAction(FILTER_NAME_IN_STOCK) {
             @Override
             public void execute(String filterValue) {
