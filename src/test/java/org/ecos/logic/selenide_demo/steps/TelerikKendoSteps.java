@@ -110,17 +110,11 @@ public class TelerikKendoSteps {
         }
         if (this.filteringValidationActions.stream().noneMatch(item -> item.match(columnName))) {
             String join = String.join(
-                "\n\t",
-                this.filteringValidationActions.stream().map(ActionByKey::getKey).toList()
+                ",",
+                this.filteringValidationActions.stream().map(item->format("'%s'",item.getKey())).toList()
             );
-            throw new FeatureParserException(
-                format(
-                    "There's not colum named as '%s' inside the action collection keys: \t%n %s",
-                    columnName,
-                    join
-                )
-            );
-
+            String message = format("There's not colum named as '%s' inside the collection keys: %n [%s]", columnName, join);
+            throw new FeatureParserException(message);
         }
     }
 
