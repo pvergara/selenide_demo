@@ -13,7 +13,8 @@ Feature: Filter, sorting and paginating a grid
     Given Open browser with Telerik Kendo Grid example
     And The number of rows are the default ones
     When I type "Grain" on "Category" filter
-    Then The number of rows decrease
+    Then The "Category" rows only has text that contains "Grain"
+    And The number of rows decrease
 
   @Telerik_grid @discontinued_filter
   Scenario: User can filter by if is or not discontinued

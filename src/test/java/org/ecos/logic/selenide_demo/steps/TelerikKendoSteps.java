@@ -1,9 +1,11 @@
 package org.ecos.logic.selenide_demo.steps;
 
+import io.cucumber.core.gherkin.FeatureParserException;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.ecos.logic.selenide_demo.action.Action;
+import org.ecos.logic.selenide_demo.action.ActionByKey;
 import org.ecos.logic.selenide_demo.action.EqualsMatchAction;
 import org.ecos.logic.selenide_demo.pages.TelerikKendoPage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.String.format;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.ecos.logic.selenide_demo.utils.Constants.*;
 
@@ -27,7 +30,7 @@ public class TelerikKendoSteps {
 
     private int numberOfRows;
     private final List<Action> filteringActions;
-    private final List<Action> filteringValidationActions;
+    private final List<ActionByKey> filteringValidationActions;
 
     public TelerikKendoSteps() {
         this.filteringActions = new ArrayList<>();
@@ -38,12 +41,7 @@ public class TelerikKendoSteps {
         this.filteringActions.add(new TelerikKendoFilteringAction(FILTER_NAME_IN_STOCK, KENDO_TABLE_UNITS_IN_STOCK_FILTER));
 
         this.filteringValidationActions = new ArrayList<>();
-        this.filteringValidationActions.add(new Action() {
-            @Override
-            public boolean match(String filterName) {
-                return filterName.equals(FILTER_NAME_PRODUCT_NAME);
-            }
-
+        this.filteringValidationActions.add(new EqualsMatchAction(FILTER_NAME_PRODUCT_NAME) {
             @Override
             public void execute(String filterValue) {
                 List<String> result = TelerikKendoSteps.this.page.getAllValuesOfProductName();
@@ -52,12 +50,7 @@ public class TelerikKendoSteps {
                 ).isTrue();
             }
         });
-        this.filteringValidationActions.add(new Action() {
-            @Override
-            public boolean match(String filterName) {
-                return filterName.equals(FILTER_NAME_DISCONTINUED);
-            }
-
+        this.filteringValidationActions.add(new EqualsMatchAction(FILTER_NAME_DISCONTINUED) {
             @Override
             public void execute(String filterValue) {
                 List<String> result = TelerikKendoSteps.this.page.getAllValuesOfIsDiscontinuedField();
@@ -66,12 +59,7 @@ public class TelerikKendoSteps {
                 ).isTrue();
             }
         });
-        this.filteringValidationActions.add(new Action() {
-            @Override
-            public boolean match(String filterName) {
-                return filterName.equals(FILTER_NAME_IN_STOCK);
-            }
-
+        this.filteringValidationActions.add(new EqualsMatchAction(FILTER_NAME_IN_STOCK) {
             @Override
             public void execute(String filterValue) {
                 List<String> result = TelerikKendoSteps.this.page.getAllValuesOfInStockField();
@@ -119,6 +107,20 @@ public class TelerikKendoSteps {
         for (Action filteringValidationAction : this.filteringValidationActions) {
             if (filteringValidationAction.match(columnName))
                 filteringValidationAction.execute(filterValue);
+        }
+        if (this.filteringValidationActions.stream().noneMatch(item -> item.match(columnName))) {
+            String join = String.join(
+                "\n\t",
+                this.filteringValidationActions.stream().map(ActionByKey::getKey).toList()
+            );
+            throw new FeatureParserException(
+                format(
+                    "There's not colum named as '%s' inside the action collection keys: \t%n %s",
+                    columnName,
+                    join
+                )
+            );
+
         }
     }
 

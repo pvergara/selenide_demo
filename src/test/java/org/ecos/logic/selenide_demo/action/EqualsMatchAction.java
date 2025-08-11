@@ -1,6 +1,6 @@
 package org.ecos.logic.selenide_demo.action;
 
-public abstract class EqualsMatchAction implements Action
+public abstract class EqualsMatchAction implements ActionByKey
 {
     private final String actionCode;
 
@@ -11,5 +11,10 @@ public abstract class EqualsMatchAction implements Action
     @Override
     public boolean match(String filterName) {
         return this.actionCode.equals(filterName);
+    }
+
+    @Override
+    public String getKey() {
+        return actionCode;
     }
 }
