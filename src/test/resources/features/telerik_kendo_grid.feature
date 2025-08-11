@@ -16,6 +16,15 @@ Feature: Filter, sorting and paginating a grid
     Then The "Category" rows only has text that contains "Grain"
     And The number of rows decrease
 
+
+  @Telerik_grid @category_filter @custom
+  Scenario: User can filter by product categories
+    Given Open browser with Telerik Kendo Grid example
+    And The number of rows are the default ones
+    When I type "Meat" on "Category" filter as "Starts with" clause
+    Then The "Category" rows only contains rows that starts with "Meat"
+    And The number of rows decrease
+
   @Telerik_grid @discontinued_filter
   Scenario: User can filter by if is or not discontinued
     Given Open browser with Telerik Kendo Grid example
@@ -33,7 +42,7 @@ Feature: Filter, sorting and paginating a grid
     And The number of rows decrease
 
 
-  @Telerik_grid @price_filter
+  @Telerik_grid @price_filter @custom
   Scenario: User can filter by product price
     Given Open browser with Telerik Kendo Grid example
     And The number of rows are the default ones

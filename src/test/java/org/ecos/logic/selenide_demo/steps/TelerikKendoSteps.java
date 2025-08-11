@@ -143,7 +143,10 @@ public class TelerikKendoSteps {
             if(typeOfFiltering.equals("Is equal to"))
                 this.page.setTypeOfFilteringAs(typeOfFiltering).typeTheFilterValueOnAFieldCalled(KENDO_TABLE_UNIT_PRICE_FILTER,filterValue);
         }
-
+        if(columnName.equalsIgnoreCase(FILTER_NAME_PRODUCT_CATEGORY)) {
+            if (typeOfFiltering.equals("Starts with"))
+                this.page.setTypeOfFilteringAs(typeOfFiltering).typeTheFilterValueOnAFieldCalled(KENDO_TABLE_CATEGORY_FILTER,filterValue);
+        }
     }
 
     @Then("The {string} rows only contains the number {string}")
@@ -152,6 +155,16 @@ public class TelerikKendoSteps {
             List<String> result = TelerikKendoSteps.this.page.getAllValuesOfPriceField();
             assertThat(
                     result.stream().allMatch(value -> Integer.valueOf(value).equals(Integer.valueOf(valueResultAsString)))
+            ).isTrue();
+        }
+    }
+
+    @Then("The {string} rows only contains rows that starts with {string}")
+    public void theRowsOnlyContainsRowsThatStartsWith(String columnName, String filterValue) {
+        if(columnName.equalsIgnoreCase(FILTER_NAME_PRODUCT_CATEGORY)) {
+            List<String> result = TelerikKendoSteps.this.page.getAllValuesProductCategory();
+            assertThat(
+                    result.stream().allMatch(value -> value.toLowerCase().startsWith(filterValue.toLowerCase()))
             ).isTrue();
         }
     }

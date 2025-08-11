@@ -19,7 +19,8 @@ public class TelerikKendoPage {
     public static final String FILTER = "input[aria-label='%s']";
     private final SelenideElement pagerInfo = $("span[class='k-pager-info']");
     private final ElementsCollection tbodyRows = $$("tbody tr");
-    private final SelenideElement customFilterButton = $("td[aria-label=\"UnitPrice Filter\"] button[aria-label=\"select\"]");
+    private final SelenideElement priceCustomFilterButton = $("td[aria-label=\"UnitPrice Filter\"] button[aria-label=\"select\"]");
+    private final SelenideElement categoryCustomFilterButton = $("td[aria-label=\"Category.CategoryName Filter\"] button[aria-label=\"select\"]");
 
     private String typeOfFiltering = "";
 
@@ -41,8 +42,12 @@ public class TelerikKendoPage {
         $(format(FILTER, productNameFilter)).type(filterValue);
 
         if (this.getTypeOfFiltering().equals("Is equal to")) {
-            this.customFilterButton.click();
-            $(byText("Is equal to")).click();
+            this.priceCustomFilterButton.click();
+            $(byText(this.getTypeOfFiltering())).click();
+        }
+        if (this.getTypeOfFiltering().equals("Starts with")) {
+            this.categoryCustomFilterButton.click();
+            $(byText(this.getTypeOfFiltering())).click();
         }
     }
 
