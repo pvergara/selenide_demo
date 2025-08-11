@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static com.codeborne.selenide.Selenide.open;
@@ -16,17 +17,20 @@ import static java.lang.String.format;
 @TestComponent
 public class TelerikKendoPage {
     public static final String FILTER = "input[aria-label='%s']";
-    private final SelenideElement pagerInfo= $("span[class='k-pager-info']");
+    private final SelenideElement pagerInfo = $("span[class='k-pager-info']");
     private final ElementsCollection tbodyRows = $$("tbody tr");
+    private final SelenideElement customFilterButton = $("td[aria-label=\"UnitPrice Filter\"] button[aria-label=\"select\"]");
 
-    public void openTelerikPage(){
+    private String typeOfFiltering = "";
+
+    public void openTelerikPage() {
         open("https://demos.telerik.com/kendo-react-ui/grid/get-started-upd/func");
     }
 
     public int getTheNumberOfRows() {
         Pattern pattern = Pattern.compile("of ([0-9]+) items");
         Matcher matcher = pattern.matcher(pagerInfo.text());
-        if(matcher.find()){
+        if (matcher.find()) {
             String numberOfItemsAsString = matcher.group(1);
             return Integer.parseInt(numberOfItemsAsString);
         }
@@ -35,35 +39,53 @@ public class TelerikKendoPage {
 
     public void typeTheFilterValueOnAFieldCalled(String productNameFilter, String filterValue) {
         $(format(FILTER, productNameFilter)).type(filterValue);
+
+        if (this.getTypeOfFiltering().equals("Is equal to")) {
+            this.customFilterButton.click();
+            $(byText("Is equal to")).click();
+        }
     }
 
     public List<String> getAllValuesOfProductName() {
         return this.
             tbodyRows.stream().
-            map(e->e.$("td[aria-colindex='2']").getText()).toList();
+            map(e -> e.$("td[aria-colindex='2']").getText()).toList();
     }
 
     public List<String> getAllValuesOfIsDiscontinuedField() {
         return this.
             tbodyRows.stream().
-            map(e->e.$("td[aria-colindex='6']").getText()).toList();
+            map(e -> e.$("td[aria-colindex='6']").getText()).toList();
     }
 
     public List<String> getAllValuesOfInStockField() {
         return this.
-            tbodyRows.stream().
-            map(e->e.$("td[aria-colindex='5']").getText()).toList();
+                tbodyRows.stream().
+                map(e -> e.$("td[aria-colindex='5']").getText()).toList();
     }
 
     public List<String> getAllValuesProductCategory() {
         return this.
             tbodyRows.stream().
-            map(e->e.$("td[aria-colindex='3']").getText()).toList();
+            map(e -> e.$("td[aria-colindex='3']").getText()).toList();
     }
 
     public List<String> getAllValuesOfPriceField() {
         return this.
             tbodyRows.stream().
-            map(e->e.$("td[aria-colindex='4']").getText()).toList();
+            map(e -> e.$("td[aria-colindex='4']").getText()).toList();
+    }
+
+    public TelerikKendoPage setTypeOfFilteringAs(String typeOfFiltering) {
+        this.setTypeOfFiltering(typeOfFiltering);
+        return this;
+    }
+
+    public void setTypeOfFiltering(String typeOfFiltering) {
+        this.typeOfFiltering = typeOfFiltering;
+    }
+
+    public String getTypeOfFiltering() {
+        return this.typeOfFiltering;
     }
 }

@@ -137,6 +137,25 @@ public class TelerikKendoSteps {
         }
     }
 
+    @When("I type {string} on {string} filter as {string} clause")
+    public void iTypeOnFilterAsClause(String filterValue, String columnName, String typeOfFiltering) {
+        if(columnName.equalsIgnoreCase(FILTER_NAME_PRICE)) {
+            if(typeOfFiltering.equals("Is equal to"))
+                this.page.setTypeOfFilteringAs(typeOfFiltering).typeTheFilterValueOnAFieldCalled(KENDO_TABLE_UNIT_PRICE_FILTER,filterValue);
+        }
+
+    }
+
+    @Then("The {string} rows only contains the number {string}")
+    public void theRowsOnlyContainsTheNumber(String columnName, String valueResultAsString) {
+        if(columnName.equalsIgnoreCase(FILTER_NAME_PRICE)) {
+            List<String> result = TelerikKendoSteps.this.page.getAllValuesOfPriceField();
+            assertThat(
+                    result.stream().allMatch(value -> Integer.valueOf(value).equals(Integer.valueOf(valueResultAsString)))
+            ).isTrue();
+        }
+    }
+
     private class TelerikKendoFilteringAction extends EqualsMatchAction {
         private final String innerFilterValue;
 
