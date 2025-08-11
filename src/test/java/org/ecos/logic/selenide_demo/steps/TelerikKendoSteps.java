@@ -27,6 +27,7 @@ public class TelerikKendoSteps {
 
     private int numberOfRows;
     private final List<Action> filteringActions;
+    private final List<Action> filteringValidationActions;
 
     public TelerikKendoSteps() {
         this.filteringActions = new ArrayList<>();
@@ -35,6 +36,50 @@ public class TelerikKendoSteps {
         this.filteringActions.add(new TelerikKendoFilteringAction(FILTER_NAME_DISCONTINUED, KENDO_TABLE_DISCONTINUED_FILTER));
         this.filteringActions.add(new TelerikKendoFilteringAction(FILTER_NAME_PRICE, KENDO_TABLE_UNIT_PRICE_FILTER));
         this.filteringActions.add(new TelerikKendoFilteringAction(FILTER_NAME_IN_STOCK, KENDO_TABLE_UNITS_IN_STOCK_FILTER));
+
+        this.filteringValidationActions = new ArrayList<>();
+        this.filteringValidationActions.add(new Action() {
+            @Override
+            public boolean match(String filterName) {
+                return filterName.equals(FILTER_NAME_PRODUCT_NAME);
+            }
+
+            @Override
+            public void execute(String filterValue) {
+                List<String> result = TelerikKendoSteps.this.page.getAllValuesOfProductName();
+                assertThat(
+                        result.stream().allMatch(value -> value.toLowerCase().contains(filterValue.toLowerCase()))
+                ).isTrue();
+            }
+        });
+        this.filteringValidationActions.add(new Action() {
+            @Override
+            public boolean match(String filterName) {
+                return filterName.equals(FILTER_NAME_DISCONTINUED);
+            }
+
+            @Override
+            public void execute(String filterValue) {
+                List<String> result = TelerikKendoSteps.this.page.getAllValuesOfIsDiscontinuedField();
+                assertThat(
+                        result.stream().allMatch(value -> value.toLowerCase().contains(filterValue.toLowerCase()))
+                ).isTrue();
+            }
+        });
+        this.filteringValidationActions.add(new Action() {
+            @Override
+            public boolean match(String filterName) {
+                return filterName.equals(FILTER_NAME_IN_STOCK);
+            }
+
+            @Override
+            public void execute(String filterValue) {
+                List<String> result = TelerikKendoSteps.this.page.getAllValuesOfInStockField();
+                assertThat(
+                        result.stream().allMatch(value -> value.toLowerCase().contains(filterValue.toLowerCase()))
+                ).isTrue();
+            }
+        });
     }
 
     public void setNumberOfRows(int numberOfRows) {
@@ -58,7 +103,7 @@ public class TelerikKendoSteps {
 
     @When("I type {string} on {string} filter")
     public void iTypeOnTheNameFilter(String filterValue, String filterName) {
-        for (Action filteringAction : filteringActions) {
+        for (Action filteringAction : this.filteringActions) {
             if (filteringAction.match(filterName))
                 filteringAction.execute(filterValue);
         }
@@ -71,26 +116,9 @@ public class TelerikKendoSteps {
 
     @Then("The {string} rows only has text that contains {string}")
     public void theRowsOnlyHasTextThatContains(String columnName, String filterValue) {
-        switch (columnName) {
-            case FILTER_NAME_PRODUCT_NAME -> {
-                List<String> result = this.page.getAllValuesOfProductName();
-                assertThat(
-                        result.stream().allMatch(value -> value.toLowerCase().contains(filterValue.toLowerCase()))
-                ).isTrue();
-            }
-            case FILTER_NAME_DISCONTINUED -> {
-                List<String> result = this.page.getAllValuesOfIsDiscontinuedField();
-                assertThat(
-                        result.stream().allMatch(value -> value.toLowerCase().contains(filterValue.toLowerCase()))
-                ).isTrue();
-            }
-            case FILTER_NAME_IN_STOCK -> {
-                List<String> result = this.page.getAllValuesOfInStockField();
-                assertThat(
-                        result.stream().allMatch(value -> value.toLowerCase().contains(filterValue.toLowerCase()))
-                ).isTrue();
-            }
-            default -> throw new IllegalArgumentException("The column name '%s' does not exist".formatted(columnName));
+        for (Action filteringValidationAction : this.filteringValidationActions) {
+            if (filteringValidationAction.match(columnName))
+                filteringValidationAction.execute(filterValue);
         }
     }
 
