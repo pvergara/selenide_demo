@@ -1,6 +1,6 @@
 Feature: Filter, sorting and paginating a grid
 
-  @Telerik_grid @name_filter
+  @Telerik_grid @name_filter @filtering
   Scenario: User can filter by product names
     Given Open browser with Telerik Kendo Grid example
     And The number of rows are the default ones
@@ -8,7 +8,7 @@ Feature: Filter, sorting and paginating a grid
     Then The "Name" rows only has text that contains "Che"
     Then The number of rows decrease
 
-  @Telerik_grid @category_filter
+  @Telerik_grid @category_filter @filtering
   Scenario: User can filter by product categories
     Given Open browser with Telerik Kendo Grid example
     And The number of rows are the default ones
@@ -16,7 +16,7 @@ Feature: Filter, sorting and paginating a grid
     Then The "Category" rows only has text that contains "Grain"
     And The number of rows decrease
 
-  @Telerik_grid @category_filter @custom
+  @Telerik_grid @category_filter @custom @filtering
   Scenario: User can filter by product categories
     Given Open browser with Telerik Kendo Grid example
     And The number of rows are the default ones
@@ -24,7 +24,7 @@ Feature: Filter, sorting and paginating a grid
     Then The "Category" rows only contains rows that starts with "Meat"
     And The number of rows decrease
 
-  @Telerik_grid @discontinued_filter
+  @Telerik_grid @discontinued_filter @filtering
   Scenario: User can filter by if is or not discontinued
     Given Open browser with Telerik Kendo Grid example
     And The number of rows are the default ones
@@ -32,7 +32,7 @@ Feature: Filter, sorting and paginating a grid
     Then The "Discontinued" rows only has text that contains "false"
     And The number of rows decrease
 
-  @Telerik_grid @price_filter
+  @Telerik_grid @price_filter @filtering
   Scenario: User can filter by product price
     Given Open browser with Telerik Kendo Grid example
     And The number of rows are the default ones
@@ -40,7 +40,7 @@ Feature: Filter, sorting and paginating a grid
     Then The "Price" rows only has text that contains "18"
     And The number of rows decrease
 
-  @Telerik_grid @price_filter @custom
+  @Telerik_grid @price_filter @custom @filtering
   Scenario: User can filter by product price
     Given Open browser with Telerik Kendo Grid example
     And The number of rows are the default ones
@@ -48,7 +48,7 @@ Feature: Filter, sorting and paginating a grid
     Then The "Price" rows only contains the number "18"
     And The number of rows decrease
 
-  @Telerik_grid @in_Stock_filter
+  @Telerik_grid @in_Stock_filter @filtering
   Scenario: User can filter by product in stock quantity
     Given Open browser with Telerik Kendo Grid example
     And The number of rows are the default ones
