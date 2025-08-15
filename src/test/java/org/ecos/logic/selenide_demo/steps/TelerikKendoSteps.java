@@ -19,12 +19,6 @@ import static org.ecos.logic.selenide_demo.utils.Constants.*;
 
 @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 public class TelerikKendoSteps {
-    private static final String FILTER_NAME_PRODUCT_NAME = "Name";
-    private static final String FILTER_NAME_PRODUCT_CATEGORY = "Category";
-    private static final String FILTER_NAME_DISCONTINUED = "Discontinued";
-    private static final String FILTER_NAME_PRICE = "Price";
-    private static final String FILTER_NAME_IN_STOCK = "In Stock";
-
     @Autowired
     private TelerikKendoPage page;
 
