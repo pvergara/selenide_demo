@@ -71,7 +71,6 @@ public class TelerikKendoSteps {
                 ).isTrue();
             }
         });
-
         this.filteringValidationActions.add(new EqualsMatchAction(FILTER_NAME_IN_STOCK) {
             @Override
             public void execute(String filterValue) {
@@ -160,6 +159,22 @@ public class TelerikKendoSteps {
             assertThat(
                     result.stream().allMatch(value -> value.toLowerCase().startsWith(filterValue.toLowerCase()))
             ).isTrue();
+        }
+    }
+
+    @When("Sort by {string} column")
+    public void sortByColumn(String columnName) {
+        if(columnName.equalsIgnoreCase(FILTER_NAME_PRODUCT_NAME))
+            this.page.sortProductName();
+    }
+
+    @Then("The rows are sorted by the {string} column")
+    public void theRowsAreSortedByTheColumn(String columnName) {
+        if(columnName.equalsIgnoreCase(FILTER_NAME_PRODUCT_NAME)) {
+            assertThat(
+                this.page.getAllValuesOfProductName().stream().
+                    sorted().toList()
+            ).isEqualTo(this.page.getAllValuesOfProductName());
         }
     }
 

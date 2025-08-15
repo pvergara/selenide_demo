@@ -9,9 +9,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
 import static java.lang.String.format;
 
 @TestComponent
@@ -21,6 +19,7 @@ public class TelerikKendoPage {
     private final ElementsCollection tbodyRows = $$("tbody tr");
     private final SelenideElement priceCustomFilterButton = $("td[aria-label=\"UnitPrice Filter\"] button[aria-label=\"select\"]");
     private final SelenideElement categoryCustomFilterButton = $("td[aria-label=\"Category.CategoryName Filter\"] button[aria-label=\"select\"]");
+    private final SelenideElement productNameColumn = $("th[aria-colindex=\"2\"]");
 
     private String typeOfFiltering = "";
 
@@ -92,5 +91,9 @@ public class TelerikKendoPage {
 
     public String getTypeOfFiltering() {
         return this.typeOfFiltering;
+    }
+
+    public void sortProductName() {
+        this.productNameColumn.click();
     }
 }
