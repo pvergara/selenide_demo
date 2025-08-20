@@ -1,4 +1,4 @@
-package org.ecos.logic.selenide_demo.grid.control;
+package org.ecos.logic.selenide_demo.grid.control.row;
 
 public enum RowPlace {
     First,

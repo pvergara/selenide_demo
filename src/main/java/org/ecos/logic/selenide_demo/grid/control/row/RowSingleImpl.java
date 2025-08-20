@@ -1,11 +1,15 @@
-package org.ecos.logic.selenide_demo.grid.control;
+package org.ecos.logic.selenide_demo.grid.control.row;
 
+import org.ecos.logic.selenide_demo.grid.control.mapping.RowMapper;
+import org.ecos.logic.selenide_demo.grid.control.parser.ParserFloat;
+import org.ecos.logic.selenide_demo.grid.control.parser.ParserInteger;
+import org.ecos.logic.selenide_demo.grid.control.parser.ParserString;
 import org.jspecify.annotations.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RowSingleImpl implements Row {
+public class RowSingleImpl<T> implements RowAs<T> {
     private final List<String> listOfElements;
     private int index;
     private final int numberOfColumns;
@@ -24,7 +28,7 @@ public class RowSingleImpl implements Row {
     }
 
     @Override
-    public Row setThe(@NonNull RowPlace rowPlace) {
+    public RowAs<T> setThe(@NonNull RowPlace rowPlace) {
         switch (rowPlace) {
             case First -> this.index = 0;
             case Second -> this.index = 1;
@@ -54,6 +58,11 @@ public class RowSingleImpl implements Row {
     }
 
     @Override
+    public void elementAs(ParserInteger parserInteger) {
+        elementAs(parserInteger.parse());
+    }
+
+    @Override
     public void elementAs(@NonNull String element) {
         this.listOfElements.set(this.index, element);
     }
@@ -64,9 +73,19 @@ public class RowSingleImpl implements Row {
     }
 
     @Override
+    public void elementAs(ParserFloat parserFloat) {
+        elementAs(parserFloat.parse());
+    }
+
+    @Override
     public String getTheElementAsString(RowPlace rowPlace) {
         this.setThe(rowPlace);
         return this.listOfElements.get(this.index);
+    }
+
+    @Override
+    public void elementAs(ParserString parserString) {
+        elementAs(parserString.parse());
     }
 
     @Override
@@ -79,5 +98,10 @@ public class RowSingleImpl implements Row {
     public Float getTheElementAsFloat(RowPlace rowPlace) {
         this.setThe(rowPlace);
         return Float.valueOf(this.listOfElements.get(this.index));
+    }
+
+    @Override
+    public T getAllElementsAs(RowMapper<T> mapper) {
+        return mapper.fromRowToCustom(this);
     }
 }
