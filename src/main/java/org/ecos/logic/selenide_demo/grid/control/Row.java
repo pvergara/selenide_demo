@@ -9,4 +9,8 @@ public interface Row {
     void elementAs(@NonNull Float aFloat);
 
     String getTheElementAsString(RowPlace rowPlace);
+
+    Integer getTheElementAsInteger(RowPlace rowPlace);
+
+    Float getTheElementAsFloat(RowPlace rowPlace);
 }

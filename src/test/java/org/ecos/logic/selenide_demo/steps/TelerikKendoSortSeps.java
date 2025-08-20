@@ -5,6 +5,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.ecos.logic.selenide_demo.grid.control.Row;
 import org.ecos.logic.selenide_demo.grid.control.RowPlace;
+import org.ecos.logic.selenide_demo.grid.kendo.sort.Product;
 import org.ecos.logic.selenide_demo.pages.TelerikKendoSortPage;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -56,13 +57,20 @@ public class TelerikKendoSortSeps {
 
         if (columnName.equals("Product Name")) {
             //I use the sublist in this case because of a strange way of sorting the data on the "Telerik side" with product names like "Sirop d'érable"
-            List<String> listPreviousProductNames = this.getData().stream().map(item -> item.getTheElementAsString(RowPlace.Second)).sorted(collator::compare).toList().
+            List<Product> listPreviousProductNames = this.getData().stream().map(this::mapElementToProduct).sorted((item1,item2)->collator.compare(item1.ProductName(),item2.ProductName())).toList().
                     subList(0, 50);
 
-            List<String> listOfSortedProductNames = this.page.getAllGridRows().stream().map(item -> item.getTheElementAsString(RowPlace.Second)).toList().
+            List<Product> listOfSortedProductNames = this.page.getAllGridRows().stream().map(this::mapElementToProduct).toList().
                     subList(0, 50);
 
             assertThat(listPreviousProductNames, is(equalTo(listOfSortedProductNames)));
         }
+    }
+
+    private Product mapElementToProduct(Row item) {
+        return new Product(
+            item.getTheElementAsInteger(RowPlace.First),
+            item.getTheElementAsString(RowPlace.Second),
+            item.getTheElementAsFloat(RowPlace.Third));
     }
 }

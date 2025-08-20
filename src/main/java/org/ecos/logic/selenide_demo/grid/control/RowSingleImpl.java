@@ -68,4 +68,16 @@ public class RowSingleImpl implements Row {
         this.setThe(rowPlace);
         return this.listOfElements.get(this.index);
     }
+
+    @Override
+    public Integer getTheElementAsInteger(RowPlace rowPlace) {
+        this.setThe(rowPlace);
+        return Integer.valueOf(this.listOfElements.get(this.index));
+    }
+
+    @Override
+    public Float getTheElementAsFloat(RowPlace rowPlace) {
+        this.setThe(rowPlace);
+        return Float.valueOf(this.listOfElements.get(this.index));
+    }
 }
