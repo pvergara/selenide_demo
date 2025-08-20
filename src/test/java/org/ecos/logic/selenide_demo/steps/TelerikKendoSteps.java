@@ -91,9 +91,8 @@ public class TelerikKendoSteps {
     }
 
     @Given("Open browser with Telerik Kendo Grid example")
-    public void anOpenBrowserWithDuckduckgoCom() {
+    public void anOpenBrowserWithTelerikKendoGridExample() {
         this.page.openTelerikPage();
-
     }
 
     @Given("The number of rows are the default ones")
@@ -159,22 +158,6 @@ public class TelerikKendoSteps {
             assertThat(
                     result.stream().allMatch(value -> value.toLowerCase().startsWith(filterValue.toLowerCase()))
             ).isTrue();
-        }
-    }
-
-    @When("Sort by {string} column")
-    public void sortByColumn(String columnName) {
-        if(columnName.equalsIgnoreCase(FILTER_NAME_PRODUCT_NAME))
-            this.page.sortProductName();
-    }
-
-    @Then("The rows are sorted by the {string} column")
-    public void theRowsAreSortedByTheColumn(String columnName) {
-        if(columnName.equalsIgnoreCase(FILTER_NAME_PRODUCT_NAME)) {
-            assertThat(
-                this.page.getAllValuesOfProductName().stream().
-                    sorted().toList()
-            ).isEqualTo(this.page.getAllValuesOfProductName());
         }
     }
 
